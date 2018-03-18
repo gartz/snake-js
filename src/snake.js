@@ -1,4 +1,6 @@
 const sourceElement = document.getElementById('source');
+const messageElement = document.getElementById('message');
+const scoreElement = document.getElementById('score');
 
 sourceElement.width = window.innerWidth;
 sourceElement.height = window.innerHeight;
@@ -99,6 +101,8 @@ function move() {
 
 let game;
 function startGame() {
+    messageElement.style.display = 'none';
+
     let piece;
     while (piece = snake.shift()) {
         unavailableBlocks[`${piece.x}_${piece.y}`] = false;
@@ -131,6 +135,8 @@ function startGame() {
 function stopGame() {
     clearInterval(game);
     game = null;
+    scoreElement.textContent = `Your score is: ${snake.length}`;
+    messageElement.style.display = 'block';
 }
 
 body.addEventListener('keydown', event => {

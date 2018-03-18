@@ -1,10 +1,29 @@
 <html>
   <title>Snake</title>
   <style>
-    body, #source {width:100%; height:100%; margin:0px;}
+    body, #source {
+      width:100%; 
+      height:100%; 
+      margin:0px;
+      font-family: monospace;
+      color: deepskyblue;
+    }
+    #message {
+      font-size: 4em;
+      text-align: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+    }
   </style>
   <body>
     <article>
+      <div id="message">
+        <div>Press [enter] to start</div>
+        <div id="score"></div>
+      </div>
       <canvas id="source"></canvas>
     </article>
     <script src="./snake.js"></script>

@@ -10,7 +10,7 @@ COPY . .
 
 RUN npm install --only dev \
     && npm install \
-    && npm run build
+    && npm run build -- --mode=${NODE_ENV}
 
 FROM progrium/busybox
 LABEL maintainer="Gabriel Reitz Giannattasio <g@gartz.me>"

@@ -21,7 +21,7 @@ const BLOCK_SIZE = 20;
 const unavailableBlocks = {};
 
 const maxWidth = Math.floor(sourceElement.width / BLOCK_SIZE);
-const maxHeight = Math.floor(sourceElement.height / BLOCK_SIZE);
+const maxHeight = Math.floor(sourceElement.height / BLOCK_SIZE) - 1;
 
 const snake = [];
 

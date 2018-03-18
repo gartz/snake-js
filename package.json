@@ -1,0 +1,27 @@
+{
+  "name": "snake-js",
+  "version": "1.0.0",
+  "description": "Boring afternoon snake game",
+  "main": "src/snake.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gartz/snake-js.git"
+  },
+  "keywords": [
+    "snake",
+    "game",
+    "js",
+    "html",
+    "canvas",
+    "boring"
+  ],
+  "author": "Gabriel Reitz Giannattasio <g@gartz.me>",
+  "license": "SEE LICENSE IN LICENSE",
+  "bugs": {
+    "url": "https://github.com/gartz/snake-js/issues"
+  },
+  "homepage": "https://github.com/gartz/snake-js#readme"
+}

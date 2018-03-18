@@ -17,7 +17,7 @@ try {
 
 if (fs.existsSync('./.git')) {
     const isDirtyRepo = Boolean(`${execSync('git diff --shortstat 2> /dev/null | tail -n1')}`.replace(/[ \n\r]/g, ''));
-    const gitVersionCommand = `git describe ${isDirtyRepo ? '--long' : ''}`;
+    const gitVersionCommand = `git describe ${isDirtyRepo ? '--long ' : ''} | cut -c 2-`;
     customVersion = `${execSync(gitVersionCommand)}`.replace('\n', '');
 }
 

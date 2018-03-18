@@ -13,16 +13,54 @@ const BLOCK_SIZE = 20;
 const maxWidth = Math.floor(sourceElement.width / BLOCK_SIZE) - 1;
 const maxHeight = Math.floor(sourceElement.height / BLOCK_SIZE) - 1;
 
+function getHiddenProp(){
+    var prefixes = ['webkit','moz','ms','o'];
+    
+    // if 'hidden' is natively supported just return it
+    if ('hidden' in document) return 'hidden';
+    
+    // otherwise loop over all the known prefixes until we find one
+    for (var i = 0; i < prefixes.length; i++){
+        if ((prefixes[i] + 'Hidden') in document) 
+            return prefixes[i] + 'Hidden';
+    }
+
+    // otherwise it's not supported
+    return null;
+}
+
+function isHidden() {
+    var prop = getHiddenProp();
+    if (!prop) return false;
+    
+    return document[prop];
+}
+
 export class SnakeGame {
     constructor(previousGame) {
         this.COLOR_BG = 'black';
         this.COLOR_FOOD = '#ff06dc';
         this.COLOR_DEAD_BLOCK = 'red';
+        this.INITIAL_SIZE = 4;
 
         this.nextMoveInterval = null;
 
         this.keyboardControls = (event) => {
+            if (!this.nextMoveInterval && this.snake.length) {
+                switch(event.keyCode) {
+                    case 37:
+                    case 38:
+                    case 39:
+                    case 40:
+                        this.continue();
+                }
+            }
+
             switch (event.keyCode) {
+                case 82:
+                    this.stopGame();
+                    this.reset();
+                    return;
                 case 37:
                     if (this.lastMove !== 'right') {
                         this.lastKey = 'left';
@@ -45,11 +83,20 @@ export class SnakeGame {
                     return;
                 case 13:
                     if (!this.nextMoveInterval) {
-                        this.startGame();
+                        if (this.snake.length) {
+                            this.continue();
+                        } else {
+                            this.startGame();
+                        }
                     }
                     return;
                 case 80:
-                    this.pause();
+                    if (this.nextMoveInterval) {
+                        this.pause();
+                    } else {
+                        this.continue();
+                    }
+                    
                     return;
             }
         }
@@ -141,7 +188,7 @@ export class SnakeGame {
         const snakeFood = this.snakeFood;
 
         if (this.hasSnakeCollide()) {
-            const piece = this.snake[snake.length - 1];
+            const piece = this.snake[0];
             this.unavailableBlocks[`${piece.x}_${piece.y}`] = false;
             ctx.fillStyle = this.COLOR_DEAD_BLOCK;
             ctx.fill(piece);
@@ -156,15 +203,17 @@ export class SnakeGame {
         unavailableBlocks[`${this.x}_${this.y}`] = true;
         snake.unshift(snakePiece)
 
-        
 
-        if (snake.length > 1 && (this.x !== snakeFood.x || this.y !== snakeFood.y)) {
+        if (snakeFood && (this.x !== snakeFood.x || this.y !== snakeFood.y)) {
             const piece = snake.pop();
             unavailableBlocks[`${piece.x}_${piece.y}`] = false;
             ctx.fillStyle = this.COLOR_BG;
             ctx.fill(piece);
         } else {
-            this.addSnakeFood();
+            // TODO: apply every 10 frames
+            ctx.fillStyle = this.COLOR_BG;
+            ctx.fillRect(0, 0, sourceElement.width, sourceElement.height);
+            snake.length > this.INITIAL_SIZE && this.addSnakeFood();
         }
 
         this.snakeDrawn();
@@ -176,7 +225,17 @@ export class SnakeGame {
     }
 
     continue() {
+        if (!this.snake.length) {
+            return;
+        }
+
         this.nextMoveInterval = setInterval(() => {
+            if (isHidden()) {
+                console.log('is hidden');
+                this.pause();
+                return;
+            }
+
             this.lastMove = this.lastKey;
             switch (this.lastKey) {
                 case 'left':
@@ -203,14 +262,20 @@ export class SnakeGame {
         this.snakeFood = null;
 
         this.reset();
+        this.move();
         this.continue();
     }
 
     stopGame() {
         clearInterval(this.nextMoveInterval);
         this.nextMoveInterval = null;
-
-        scoreElement.textContent = `Your score is: ${this.snake.length}`;
+        
+        scoreElement.textContent = this.snake.length > this.INITIAL_SIZE + 1
+            ? `Your score is: ${this.snake.length - (this.INITIAL_SIZE + 1)}`
+            : ''
+        ;
         messageElement.style.display = 'block';
+
+        this.snake = [];
     }
 }

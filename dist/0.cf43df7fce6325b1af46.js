@@ -1,1 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[0],{"/FaJ":function(n,o,w){"use strict";w.r(o),w.d(o,"VERSION",function(){return c});const c=window.VERSION="2.0.2-0-gf46a583"}}]);

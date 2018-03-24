@@ -26,11 +26,18 @@
   },
   "homepage": "https://github.com/gartz/snake-js#readme",
   "devDependencies": {
+    "babel": "^6.23.0",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.4",
+    "babel-plugin-syntax-dynamic-import": "^6.18.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.6.1",
     "clean-webpack-plugin": "^0.1.19",
     "html-webpack-plugin": "^3.0.6",
     "offline-plugin": "^4.9.0",
     "webpack": "^4.1.1",
     "webpack-cli": "^2.0.12",
     "webpack-dev-server": "^3.1.1"
-  }
+  },
+  "dependencies": {}
 }

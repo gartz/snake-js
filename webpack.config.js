@@ -43,6 +43,31 @@ module.exports = (env, argv) => ({
             }
         }
     },
+    module: {
+        rules: [
+            // Add support to many browser in production only
+            argv.mode === 'production' ? {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        cacheDirectory: argv.mode !== 'production',
+                        presets: [
+                            ['env', {
+                                useBuiltIns: 'usage',
+                                modules: false,
+                            }]
+                        ],
+                        plugins: [
+                            'syntax-dynamic-import',
+                            'babel-plugin-transform-runtime',
+                        ],
+                    }
+                }
+            } : null,
+        ].filter(Boolean),
+    },
     plugins: [
         new CleanWebpackPlugin(['dist']),
 

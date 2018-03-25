@@ -1,13 +1,37 @@
 import OfflinePluginRuntime from 'offline-plugin/runtime';
 
-import { SnakeGame } from './snake';
+import { Platform } from './platform';
+import { keyboard } from './control/device/keyboard';
+import { Snake } from './snake';
 const versionImport = import('./version');
 
-let snakeGame = new SnakeGame();
+function initGame(Platform, Snake, keyboard, restore) {
+    const snakeGame = new Platform({
+        restore,
+        Snake,
+    });
 
-if (module.hot) {
-    window.snakeGame = snakeGame;
+    snakeGame.addControl(keyboard, {
+        name: 'Keyboard',
+    });
+    snakeGame.addControl(keyboard, {
+        name: 'Alternative Keyboard',
+        keyMap: {
+            a: 'left',
+            s: 'down',
+            d: 'right',
+            w: 'up',
+        }
+    });
+
+    if (module.hot) {
+        window.snakeGame = snakeGame;
+    }
+
+    return snakeGame;
 }
+
+let snakeGame = initGame(Platform, Snake, keyboard);
 
 OfflinePluginRuntime.install({
     // More details at: https://github.com/NekR/offline-plugin-pwa/blob/master/src/main.js#L3
@@ -37,14 +61,12 @@ OfflinePluginRuntime.install({
 });
 
 if (module.hot) {
-    module.hot.accept('./snake.js', () => {
-        const { SnakeGame } = require('./snake');
-        const previousGame = snakeGame;
-        try {
-            snakeGame = new SnakeGame(snakeGame);
-            previousGame.destroy();
-        } catch(error) {
-            console.log(error);
-        }
+    module.hot.accept(['./snake.js', './platform.js'], () => {
+        const { Platform } = require('./platform');
+        const { Snake } = require('./snake');
+        const { keyboard } = require('./control/device/keyboard');
+        const oldSnakeGame = snakeGame;
+        snakeGame = initGame(Platform, Snake, keyboard, snakeGame);
+        oldSnakeGame.destroy();
     });
 }

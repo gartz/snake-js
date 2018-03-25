@@ -62,6 +62,7 @@ module.exports = (env, argv) => ({
                         plugins: [
                             'syntax-dynamic-import',
                             'babel-plugin-transform-runtime',
+                            'transform-object-rest-spread',
                         ],
                     }
                 }

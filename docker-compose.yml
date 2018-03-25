@@ -3,6 +3,8 @@ version: "3.5"
 services:
   webserver:
     image: gartz/snake-js
+    build:
+      context: .
     domainname: gartz.com.br
     ports:
       - 80:80

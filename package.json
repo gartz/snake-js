@@ -1,6 +1,6 @@
 {
   "name": "snake-js",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Boring afternoon snake game",
   "main": "src/index.js",
   "scripts": {

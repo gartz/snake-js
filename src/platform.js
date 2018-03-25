@@ -1,4 +1,5 @@
 import { Control } from './control'
+import { isHidden } from './control/browserTab';
 
 const sourceElement = document.getElementById('source');
 const messageElement = document.getElementById('message');
@@ -16,10 +17,10 @@ const maxHeight = Math.floor(sourceElement.height / BLOCK_SIZE) - 1;
 export class Platform {
     constructor(options) {
         this.Snake = options.Snake;
-        this.COLOR_BG = options.COLOR_BG || 'black';
+        this.COLOR_BG = options.COLOR_BG || '#000000';
         this.COLOR_FOOD = '#ff06dc';
         this.INITIAL_SIZE = options.INITIAL_SIZE || 7;
-        this.SPEED = 175;
+        this.SPEED = 100;
 
         // Set of snakes playing
         this.snakes = new Set();
@@ -66,7 +67,7 @@ export class Platform {
         this.controls.add(control);
     }
 
-    updateSnakes() {
+    async updateSnakes() {
         for (let snake of this.snakes) {
             snake.update();
 
@@ -110,15 +111,17 @@ export class Platform {
         }
     }
 
-    updatePowerUp() {
+    async updatePowerUp() {
         if (!this.powerUp) {
             let snakeFood = this.powerUp;
             while(!snakeFood || this.getBlock(snakeFood)) {
-                snakeFood = {
-                    x: Math.floor(Math.random() * Math.floor(maxWidth)),
-                    y: Math.floor(Math.random() * Math.floor(maxHeight)),
-                    action: 'grow',
-                };
+                snakeFood = await new Promise(resolve => requestAnimationFrame(() => {
+                    resolve({
+                        x: Math.floor(Math.random() * Math.floor(maxWidth)),
+                        y: Math.floor(Math.random() * Math.floor(maxHeight)),
+                        action: 'grow',
+                    });
+                }));
             }
             this.setBlock(snakeFood, snakeFood);
             this.powerUp = snakeFood;
@@ -160,6 +163,8 @@ export class Platform {
     }
 
     draw() {
+        // Rainbow colors
+        //this.COLOR_BG = '#' + this.COLOR_BG.substr(1).split('').map(n => `${Math.floor(Math.random() * 10)}`).join('');
         ctx.fillStyle = this.COLOR_BG;
         ctx.fillRect(0, 0, sourceElement.width, sourceElement.height);
 
@@ -176,9 +181,13 @@ export class Platform {
         this.isPaused = false;
         let frame = 0;
         this.interval = setInterval(() => {
+            if (isHidden()) {
+                return this.pause();
+            }
+
             this.updateSnakes();
             this.updatePowerUp();
-            if (frame++ > 10) {
+            if (frame++ >50) {
                 this.draw();
                 frame = 0;
             } else {

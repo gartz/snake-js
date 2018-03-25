@@ -40,7 +40,7 @@ export class Snake {
 
     color(index) {
         if (this.isDead && index === 0) {
-            return 'red';
+            return this.COLOR_DEAD_BLOCK;
         }
         return index % 2 === 0  ? 'green' : 'lightgreen';
     }

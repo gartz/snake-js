@@ -14,7 +14,7 @@ function getHiddenProp(){
     return null;
 }
 
-function isHidden() {
+export function isHidden() {
     const prop = getHiddenProp();
     if (!prop) return false;
 

@@ -6,7 +6,7 @@ const messageElement = document.getElementById('message');
 const scoreElement = document.getElementById('score');
 
 sourceElement.width = window.innerWidth;
-sourceElement.height = window.innerHeight;
+sourceElement.height = window.innerHeight - 160;
 
 const ctx = sourceElement.getContext('2d');
 
@@ -33,7 +33,7 @@ export class Platform {
 
         this.controls = new Set();
 
-        this.isPaused = false;
+        this.isPaused = true;
         this.isStarted = false;
 
         this.deadSnakes = 0;
@@ -173,7 +173,7 @@ export class Platform {
     }
 
     continue() {
-        if (!this.isStarted) {
+        if (!this.isStarted || !this.isPaused) {
             return;
         }
         
@@ -202,7 +202,7 @@ export class Platform {
 
     play() {
         if (!this.isStarted) {
-            messageElement.style.display = 'none';
+            messageElement.style.opacity = 0;
 
             const controls = this.controls.values();
 
@@ -245,7 +245,7 @@ export class Platform {
             const sizeScore = snake.pieces.size - this.INITIAL_SIZE;
             scoreElement.innerHTML += `<div>${snake.name} score is: ${killScore + sizeScore}</div>`;
         }
-        messageElement.style.display = 'block';
+        messageElement.style.opacity = 1;
 
         this.snakes.clear();
         this.powerUp = null;

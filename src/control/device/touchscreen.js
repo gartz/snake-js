@@ -41,7 +41,7 @@ export function touchscreen({ read, write, keyMap }) {
     controlBody.style.fontWeight = 'bold';
     controlBody.style.display = 'flex';
     controlBody.style.width = '100%';
-    controlBody.style.padding = '10%';
+    controlBody.style.padding = '40px';
     controlBody.style.boxSizing = 'border-box';
     controlBody.style.userSelect = 'none';
 

@@ -13,23 +13,41 @@
         font-family: monospace;
         color: deepskyblue;
         overflow: hidden;
+        user-select: none;
+        background-color: #0000008c;
       }
       #message {
-        font-size: 4em;
+        font-size: 3rem;
         text-align: center;
         position: fixed;
         top: 0;
         left: 0;
         height: 100%;
         width: 100%;
+        display: flex;
+        align-items: center;
+        background-color: #0000008c;
+        transition: 1s linear;
+      }
+      #message>div {
+        width: 100%;
+      }
+      #playMessage {
+        width: 100%;
+      }
+      #score {
+        padding-top: 60px;
+        font-size: 2rem;
       }
     </style>
   </head>
   <body>
     <article>
       <div id="message">
-        <div>Press [enter] to start</div>
-        <div id="score"></div>
+        <div>
+          <div id="playMessage">Press [enter] or [click] to start</div>
+          <div id="score"></div>
+        </div>
       </div>
       <canvas id="source"></canvas>
     </article>

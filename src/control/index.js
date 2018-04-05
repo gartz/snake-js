@@ -33,7 +33,7 @@ export class Control {
 
         this.platform = platform;
 
-        if (!platform || !device) {
+        if (!platform || !device || this.platformDevice) {
             return;
         }
 
@@ -63,7 +63,7 @@ export class Control {
 
         this.snake = snake;
 
-        if (!snake || !device) {
+        if (!snake || !device || this.snakeDevice) {
             return;
         }
 

@@ -44,7 +44,7 @@ export class Platform {
     destroy() {
         // Remove all controls
         for (let control of this.controls) {
-            control.device();
+            control.destroy();
             this.controls.delete(control);
         }
         this.stop();
@@ -210,7 +210,7 @@ export class Platform {
                 name: 'Green Snake',
                 size: this.INITIAL_SIZE,
             });
-            controls.next().value.snake = snake;
+            controls.next().value.setSnake(snake);
 
             const snake2 = this.addSnake({
                 name: 'Blue Snake',
@@ -226,7 +226,9 @@ export class Platform {
                 }
                 return index % 2 === 0  ? 'blue' : 'lightblue';
             };
-            controls.next().value.snake = snake2;
+            controls.next().value.setSnake(snake2);
+
+            controls.next().value.setSnake(snake);
         }
         this.continue();
     }

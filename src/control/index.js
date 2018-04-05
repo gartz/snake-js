@@ -109,6 +109,40 @@ export class Control {
             }
         }
 
+        const invertRight = () => {
+            const {
+                direction,
+            } = this.snake;
+
+            if (direction === 'right') {
+                return this.snake.down();
+            }
+            if (direction === 'down') {
+                return this.snake.right();
+            }
+            if (direction === 'up') {
+                return this.snake.right();
+            }
+            return this.snake.down();
+        }
+
+        const invertLeft = () => {
+            const {
+                direction,
+            } = this.snake;
+
+            if (direction === 'left') {
+                return this.snake.up();
+            }
+            if (direction === 'down') {
+                return this.snake.left();
+            }
+            if (direction === 'up') {
+                return this.snake.left();
+            }
+            return this.snake.up();
+        }
+
         const write = {
             up: () => this.snake.up(),
             down: () => this.snake.down(),
@@ -116,6 +150,8 @@ export class Control {
             right: () => this.snake.right(),
             turnLeft,
             turnRight,
+            invertLeft,
+            invertRight,
         };
 
         this.snakeDevice = device({

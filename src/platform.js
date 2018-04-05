@@ -173,11 +173,11 @@ export class Platform {
     }
 
     continue() {
-        if (this.isStarted && !this.isPaused) {
+        if (!this.isStarted) {
             return;
         }
+        
         this.draw();
-        this.isStarted = true;
         this.isPaused = false;
         let frame = 0;
         this.interval = setInterval(() => {
@@ -229,6 +229,8 @@ export class Platform {
             controls.next().value.setSnake(snake2);
 
             controls.next().value.setSnake(snake);
+
+            this.isStarted = true;
         }
         this.continue();
     }

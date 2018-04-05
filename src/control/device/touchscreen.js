@@ -48,19 +48,26 @@ export function touchscreen({ read, write, keyMap }) {
     leftButton.style.opacity = .5;
     leftButton.style.border = '8px solid #FFF'
     leftButton.style.borderRadius = '100%'
-    leftButton.style.padding = '13px 40px';
+    leftButton.style.textAlign = 'center';
+    leftButton.style.width = '80px';
+    leftButton.style.height = '80px';
+    leftButton.style.lineHeight = '80px';
 
     emptyBlock.style.flex = '1 1'
 
     rightButton.style.opacity = .5;
     rightButton.style.border = '8px solid #FFF'
     rightButton.style.borderRadius = '100%'
-    rightButton.style.padding = '13px 40px';
+    rightButton.style.textAlign = 'center';
+    rightButton.style.width = '80px';
+    rightButton.style.height = '80px';
+    rightButton.style.lineHeight = '80px';
+
 
     read.appendChild(controlBody);
 
-    const leftListener = event => event.preventDefault() || write.turnLeft();
-    const rightListener = event => event.preventDefault() || write.turnRight();
+    const leftListener = event => event.preventDefault() || write.invertLeft();
+    const rightListener = event => event.preventDefault() || write.invertRight();
 
     leftButton.addEventListener('touchstart', leftListener);
     leftButton.addEventListener('mousedown', leftListener);

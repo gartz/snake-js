@@ -3,14 +3,13 @@ FROM node:carbon
 # Define the folder where we will be running commands in the container
 WORKDIR /frontend
 
-ENV NODE_ENV=production
+ENV NODE_ENV=development
 
 # Install the dependencies
 COPY . .
 
-RUN npm install --only dev \
-    && npm install \
-    && npm run build -- --mode=${NODE_ENV}
+RUN npm install \
+    && NODE_ENV=production npm run build -- --mode=${NODE_ENV}
 
 FROM progrium/busybox
 LABEL maintainer="Gabriel Reitz Giannattasio <g@gartz.me>"

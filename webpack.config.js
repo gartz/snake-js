@@ -2,6 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const OfflinePlugin = require('offline-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const webpack = require('webpack');
 const fs = require('fs');
@@ -86,6 +87,10 @@ module.exports = (env, argv) => ({
 
         argv.mode !== 'production' ? new webpack.NamedModulesPlugin() : null,
         argv.mode !== 'production' ? new webpack.HotModuleReplacementPlugin(): null,
+
+        new CopyWebpackPlugin([
+            { from: './src/manifest.json', toType: 'file' },
+        ]),
 
         new HtmlWebpackPlugin({
             title: 'Snake',

@@ -1,0 +1,9 @@
+{
+  "short_name": "Snake JS",
+  "name": "Snake JS - By Gartz",
+  "icons": [],
+  "start_url": "/?utm_source=homescreen",
+  "display": "standalone",
+  "theme_color": "#000",
+  "background_color": "#000"
+}

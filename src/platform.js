@@ -84,16 +84,29 @@ export class Platform {
             if (snake.y > maxHeight) {
                 snake.y = 0;
             }
-
+        }
+        for (let snake of this.snakes) {
             const block = this.getBlock(snake);
             if (block) {
                 if (block.action === 'kill' && !snake.isDead) {
-                    snake.die();
-                    this.deadSnakes++;
-                    if (snake !== block) {
-                        block.kills++;
+                    if (block.removedPiece && block.removedPiece.x === snake.x && block.removedPiece.y === snake.y) {
+                        const tailOwnerHead = this.getBlock(block);
+                        if (tailOwnerHead && tailOwnerHead.action === 'grow') {
+                            snake.die();
+                            this.deadSnakes++;
+                            if (snake !== block) {
+                                block.kills++;
+                            }
+                            return;
+                        }
+                    } else {
+                        snake.die();
+                        this.deadSnakes++;
+                        if (snake !== block) {
+                            block.kills++;
+                        }
+                        return;
                     }
-                    return;
                 }
                 if (block.action === 'grow') {
                     snake.grow();

@@ -24,14 +24,31 @@ export function touchscreen({ read, write, keyMap }) {
 
     const controlBody = document.createElement('div');
     const leftButton = document.createElement('div');
+    const upButton = document.createElement('div');
     const emptyBlock = document.createElement('div');
+    const downButton = document.createElement('div');
     const rightButton = document.createElement('div');
 
-    leftButton.innerText = '<';
-    rightButton.innerText = '>';
+    [leftButton, upButton, downButton, rightButton].forEach(button => {
+        button.innerText = '<';
+        button.style.opacity = '.5';
+        button.style.border = '6px solid #FFF';
+        button.style.borderRadius = '100%';
+        button.style.textAlign = 'center';
+        button.style.width = '50px';
+        button.style.height = '50px';
+        button.style.lineHeight = '49px';
+        button.style.margin = '6px';
+    });
+
+    upButton.style.transform = 'rotate(90deg)';
+    rightButton.style.transform = 'rotate(180deg)';
+    downButton.style.transform = 'rotate(270deg)';
 
     controlBody.appendChild(leftButton);
+    controlBody.appendChild(upButton);
     controlBody.appendChild(emptyBlock);
+    controlBody.appendChild(downButton);
     controlBody.appendChild(rightButton);
 
     controlBody.style.position = 'fixed';
@@ -41,45 +58,38 @@ export function touchscreen({ read, write, keyMap }) {
     controlBody.style.fontWeight = 'bold';
     controlBody.style.display = 'flex';
     controlBody.style.width = '100%';
-    controlBody.style.padding = '25px';
+    controlBody.style.padding = '20px';
     controlBody.style.boxSizing = 'border-box';
     controlBody.style.userSelect = 'none';
     controlBody.style.fontFamily = 'monospace';
 
-    leftButton.style.opacity = '.5';
-    leftButton.style.border = '6px solid #FFF';
-    leftButton.style.borderRadius = '100%';
-    leftButton.style.textAlign = 'center';
-    leftButton.style.width = '50px';
-    leftButton.style.height = '50px';
-    leftButton.style.lineHeight = '50px';
-
     emptyBlock.style.flex = '1 1';
-
-    rightButton.style.opacity = '.5';
-    rightButton.style.border = '6px solid #FFF';
-    rightButton.style.borderRadius = '100%';
-    rightButton.style.textAlign = 'center';
-    rightButton.style.width = '50px';
-    rightButton.style.height = '50px';
-    rightButton.style.lineHeight = '50px';
-
 
     read.appendChild(controlBody);
 
-    const leftListener = event => event.preventDefault() || write.invertLeft();
-    const rightListener = event => event.preventDefault() || write.invertRight();
+    const leftListener = event => event.preventDefault() || write.left();
+    const rightListener = event => event.preventDefault() || write.right();
+    const upListener = event => event.preventDefault() || write.up();
+    const downListener = event => event.preventDefault() || write.down();
 
     leftButton.addEventListener('touchstart', leftListener);
     leftButton.addEventListener('mousedown', leftListener);
     rightButton.addEventListener('touchstart', rightListener);
-    rightButton.addEventListener('mousedown', leftListener);
+    rightButton.addEventListener('mousedown', rightListener);
+    upButton.addEventListener('touchstart', upListener);
+    upButton.addEventListener('mousedown', upListener);
+    downButton.addEventListener('touchstart', downListener);
+    downButton.addEventListener('mousedown', downListener);
 
     return function removeKeyboardListeners() {
         leftButton.removeEventListener('touchstart', leftListener);
         leftButton.removeEventListener('mousedown', leftListener);
         rightButton.removeEventListener('touchstart', rightListener);
         rightButton.removeEventListener('mousedown', rightListener);
+        upButton.removeEventListener('touchstart', upListener);
+        upButton.removeEventListener('mousedown', upListener);
+        downButton.removeEventListener('touchstart', downListener);
+        downButton.removeEventListener('mousedown', downListener);
         read.removeChild(controlBody);
     }
 }

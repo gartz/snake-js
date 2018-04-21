@@ -72,14 +72,14 @@ export class Control {
             left: 'down',
             down: 'right',
             right: 'up',
-        }
+        };
 
         const turnRightMap = {
             up: 'right',
             right: 'down',
             down: 'left',
             left: 'up',
-        }
+        };
 
         const turnLeft = () => {
             const {
@@ -93,7 +93,7 @@ export class Control {
             if (nextDirection !== turnLeftMap[direction]) {
                 return this.snake[turnLeftMap[nextDirection]]();
             }
-        }
+        };
 
         const turnRight = () => {
             const {
@@ -107,7 +107,7 @@ export class Control {
             if (nextDirection !== turnRightMap[direction]) {
                 return this.snake[turnRightMap[nextDirection]]();
             }
-        }
+        };
 
         const invertRight = () => {
             const {
@@ -124,7 +124,7 @@ export class Control {
                 return this.snake.right();
             }
             return this.snake.down();
-        }
+        };
 
         const invertLeft = () => {
             const {
@@ -141,7 +141,7 @@ export class Control {
                 return this.snake.left();
             }
             return this.snake.up();
-        }
+        };
 
         const write = {
             up: () => this.snake.up(),

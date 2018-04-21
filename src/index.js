@@ -56,8 +56,8 @@ OfflinePluginRuntime.install({
 
     onUpdated: () => {
         if (!module.hot) {
-//             JSON.stringify(snakeGame)
-//             window.location.reload();
+            // JSON.stringify(snakeGame);
+            window.location.reload();
         }
     }
 });

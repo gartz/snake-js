@@ -44,6 +44,8 @@ export class Platform {
 
         this.deadSnakes = 0;
 
+        this.round = 0;
+
         this.draw();
     }
 
@@ -74,7 +76,12 @@ export class Platform {
     }
 
     async updateSnakes() {
-        for (let snake of this.snakes) {
+        const moveSnake = snake => {
+            if (snake.round === this.round) {
+                return;
+            }
+
+            snake.round = this.round;
             snake.update();
 
             // Outbound teleport
@@ -90,9 +97,14 @@ export class Platform {
             if (snake.y > maxHeight) {
                 snake.y = 0;
             }
-        }
-        for (let snake of this.snakes) {
-            const block = this.getBlock(snake);
+
+            let block = this.getBlock(snake);
+            if (block && block.round !== this.round && block.update) {
+                moveSnake(block);
+            }
+
+            block = this.getBlock(snake);
+
             if (block) {
                 if (block.action === 'kill' && !snake.isDead) {
                     if (block.removedPiece && block.removedPiece.x === snake.x && block.removedPiece.y === snake.y) {
@@ -127,6 +139,11 @@ export class Platform {
                 this.setBlock(snake.removedPiece, null);
             }
             this.setBlock(snake.head, snake);
+        }
+
+        for (let snake of this.snakes) {
+            moveSnake(snake);
+
         }
     }
 
@@ -204,6 +221,7 @@ export class Platform {
                 return this.pause();
             }
 
+            this.round++;
             this.updateSnakes();
             this.updatePowerUp();
             if (frame++ >50) {

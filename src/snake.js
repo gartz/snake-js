@@ -18,12 +18,18 @@ export class Snake {
         this.x = x || 0;
         this.y = y || 0;
 
+        if (!Array.isArray(this.nextDirection)) {
+            this.nextDirection = [this.nextDirection];
+        }
+
         this.isDead = false;
         this.action = 'kill';
 
         this.pieces = new Set();
         this.head = null;
         this.removedPiece = null;
+
+        this.round = 0;
 
         this.kills = 0;
 
@@ -50,9 +56,9 @@ export class Snake {
             return;
         }
 
-        this.direction = this.nextDirection;
+        this.direction = this.nextDirection.shift() || this.direction;
 
-        switch (this.nextDirection) {
+        switch (this.direction) {
             case 'left':
                 this.x--;
                 break;
@@ -98,27 +104,31 @@ export class Snake {
         this.pieces.delete(this.removedPiece);
     }
 
+    getNextDirection() {
+        return this.nextDirection[this.nextDirection.length - 1] || this.direction;
+    }
+
     down() {
-        if (this.direction !== 'up') {
-            this.nextDirection = 'down';
+        if (this.getNextDirection() !== 'up') {
+            this.nextDirection.push('down');
         }
     }
 
     up() {
-        if (this.direction !== 'down') {
-            this.nextDirection = 'up';
+        if (this.getNextDirection() !== 'down') {
+            this.nextDirection.push('up');
         }
     }
 
     left() {
-        if (this.direction !== 'right') {
-            this.nextDirection = 'left';
+        if (this.getNextDirection() !== 'right') {
+            this.nextDirection.push('left');
         }
     }
 
     right() {
-        if (this.direction !== 'left') {
-            this.nextDirection = 'right';
+        if (this.getNextDirection() !== 'left') {
+            this.nextDirection.push('right');
         }
     }
 }

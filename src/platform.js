@@ -5,14 +5,20 @@ const sourceElement = document.getElementById('source');
 const messageElement = document.getElementById('message');
 const scoreElement = document.getElementById('score');
 
-sourceElement.width = window.innerWidth;
-sourceElement.height = window.innerHeight - 160;
-
 const ctx = sourceElement.getContext('2d');
 
 const BLOCK_SIZE = 20;
-const maxWidth = Math.floor(sourceElement.width / BLOCK_SIZE) - 1;
-const maxHeight = Math.floor(sourceElement.height / BLOCK_SIZE) - 1;
+let maxWidth = 0;
+let maxHeight = 0;
+
+window.addEventListener('load', () => {
+    const { width, height } = sourceElement.parentElement.getBoundingClientRect();
+    sourceElement.width = width;
+    sourceElement.height = height;
+
+    maxWidth = Math.floor(sourceElement.width / BLOCK_SIZE) - 1;
+    maxHeight = Math.floor(sourceElement.height / BLOCK_SIZE) - 1;
+});
 
 export class Platform {
     constructor(options) {

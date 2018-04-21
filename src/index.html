@@ -8,15 +8,19 @@
     <link rel="manifest" href="/manifest.json">
     <title><%= htmlWebpackPlugin.options.title %></title>
     <style>
-      body, #source {
-        width:100%; 
-        height:100%; 
-        margin:0px;
+      body, #source, #root {
+        width: 100%;
+        height: 100%;
+        margin: 0;
         font-family: monospace;
         color: deepskyblue;
         overflow: hidden;
         user-select: none;
         background-color: #0000008c;
+      }
+      #root {
+        position: absolute;
+        height: calc(100% - 100px);
       }
       #message {
         font-size: 3rem;
@@ -44,7 +48,7 @@
     </style>
   </head>
   <body>
-    <article>
+    <article id="root">
       <div id="message">
         <div>
           <div id="playMessage">Press [enter] or [click] to start</div>

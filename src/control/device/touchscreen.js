@@ -35,33 +35,34 @@ export function touchscreen({ read, write, keyMap }) {
     controlBody.appendChild(rightButton);
 
     controlBody.style.position = 'fixed';
-    controlBody.style.fontSize = '6rem';
+    controlBody.style.fontSize = '4rem';
     controlBody.style.color = '#FFF';
     controlBody.style.bottom = '0';
     controlBody.style.fontWeight = 'bold';
     controlBody.style.display = 'flex';
     controlBody.style.width = '100%';
-    controlBody.style.padding = '40px';
+    controlBody.style.padding = '25px';
     controlBody.style.boxSizing = 'border-box';
     controlBody.style.userSelect = 'none';
+    controlBody.style.fontFamily = 'monospace';
 
-    leftButton.style.opacity = .5;
-    leftButton.style.border = '8px solid #FFF'
-    leftButton.style.borderRadius = '100%'
+    leftButton.style.opacity = '.5';
+    leftButton.style.border = '6px solid #FFF';
+    leftButton.style.borderRadius = '100%';
     leftButton.style.textAlign = 'center';
-    leftButton.style.width = '80px';
-    leftButton.style.height = '80px';
-    leftButton.style.lineHeight = '80px';
+    leftButton.style.width = '50px';
+    leftButton.style.height = '50px';
+    leftButton.style.lineHeight = '50px';
 
-    emptyBlock.style.flex = '1 1'
+    emptyBlock.style.flex = '1 1';
 
-    rightButton.style.opacity = .5;
-    rightButton.style.border = '8px solid #FFF'
-    rightButton.style.borderRadius = '100%'
+    rightButton.style.opacity = '.5';
+    rightButton.style.border = '6px solid #FFF';
+    rightButton.style.borderRadius = '100%';
     rightButton.style.textAlign = 'center';
-    rightButton.style.width = '80px';
-    rightButton.style.height = '80px';
-    rightButton.style.lineHeight = '80px';
+    rightButton.style.width = '50px';
+    rightButton.style.height = '50px';
+    rightButton.style.lineHeight = '50px';
 
 
     read.appendChild(controlBody);
